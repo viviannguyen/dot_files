@@ -1,0 +1,4 @@
+CI/*
+src-generator/*
+node_modules/*
+.tmp/*
