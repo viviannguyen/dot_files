@@ -1,6 +1,7 @@
 # Path to your oh-my-zsh installation.
+export GOPATH=~/sandbox/go
 export ZSH=/Users/viviannguyen/.oh-my-zsh
-export PATH=/usr/local/bin/powerline:$PATH
+export PATH=/usr/local/bin:$PATH:$GOPATH/bin:/usr/local/mysql/bin
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -84,10 +85,14 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ctags="`brew --prefix`/bin/ctags"
-alias vim="/usr/local/Cellar/vim/7.4.1967/bin/vim"
+# alias vim="/usr/local/Cellar/vim/8.0.0647/bin/vim"
+alias vim="nvim"
 
 # git
-alias gp="git pull origin master"
-alias gr="git rebase master"
+alias gp="git checkout development && git pull origin development"
+alias gr="git rebase development"
+alias gc="git commit -m"
+alias undo="git reset --soft 'HEAD^'"
 
-fortune | cowsay
+BASE16_SHELL=$HOME/.config/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
