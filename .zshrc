@@ -94,5 +94,28 @@ alias gr="git rebase development"
 alias gc="git commit -m"
 alias undo="git reset --soft 'HEAD^'"
 
+# db alias
+alias mystage="mysql --login-path=stage --prompt='[ !!!stage!!! ] > '"
+alias prod="mysql --login-path=production --prompt='[ !!!prod!!! ] > '"
+
+# build and run, pipe stderr to a log file
+# tail and pretty print errors. holy fuck.
+alias tail_api="tail -f ~/.api_err.log | sed 's/\\\n/\\
+/g;s/\\\t/    /g'"
+
+# $1 is module, $2 is specific test
+go_test() {
+    if [ -z "$2" ]
+        then
+            DB_USER=root go test -v -p 1 $1 2> >(sed 's/\\n/\
+        /g;s/\\t/   /g' > delme.test_err.log) > delme.test_out.log
+        else
+            DB_USER=root go test -v -p 1 $1 -run $2 2> >(sed 's/\\n/\
+        /g;s/\\t/   /g' > delme.test_err.log) > delme.test_out.log
+    fi
+}
+
+alias test_api=go_test
+
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"

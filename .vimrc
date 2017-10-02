@@ -10,7 +10,6 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/denite.nvim'
 Plugin 'Shougo/neomru.vim'
 Plugin 'tpope/vim-surround'
@@ -27,6 +26,7 @@ Plugin 'fatih/vim-go'
 Plugin 'Valloric/MatchTagAlways'
 Plugin 'alvan/vim-closetag'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'sbdchd/neoformat'
 
 
 " All of your Plugins must be added before the following line
@@ -96,6 +96,7 @@ highlight nonText ctermbg=NONE
 nnoremap ; :
 nnoremap j gj
 nnoremap k gk
+imap jk <Esc>
 
 set backspace=indent,eol,start
 
@@ -125,7 +126,6 @@ call denite#custom#source('file_mru', 'matchers', ['matcher_fuzzy', 'matcher_ign
 call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>', 'noremap')
 
 nnoremap <silent> <c-p> :Denite -auto-resize file_mru file_rec<cr>
-" nnoremap <silent> <c-p> :Denite -auto-resize file_rec<cr>
 
 nnoremap <space>/ :Denite -auto-resize grep:.<cr>
 nnoremap <space>s :Denite -quick-match buffer<cr>
@@ -194,8 +194,17 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 let g:syntastic_javascript_checkers=['eslint']
-let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
+let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint --no-ignore'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+
+"js formatting
+let g:neoformat_javascript_eslint_d = {
+        \ 'exe': 'eslint_d',
+        \ 'args': ['--stdin','--fix-to-stdout', '--parser=babel-eslint'],
+        \ 'stdin': 1,
+        \ }
+let g:neoformat_enabled_javascript = ['eslint_d']
+let g:neoformat_enabled_json = ['prettier']
